@@ -1,16 +1,19 @@
 import express from 'express';
 
+//Validations
+import { validateBody } from '../middlewares/validateBody';
+import { createUserSchema } from '../schemas/userSchema';
+
+//Routes
+import { listUsers } from '../controller/userController/listUsers';
+import { createUser } from '../controller/userController/createUser';
+import { listUserById } from '../controller/userController/listUserById';
+
 const router = express.Router();
 
-router.get('/user', (_, res) => {
-    res.send('Lista de Usuários');
-});
+router.get('/user', listUsers);
+router.get('/user/:id', listUserById);
 
-router.get('/user/:id', (req, res) => {
-    res.send(`Lista Usuário por Id. Id: ${req.params.id}`);
-});
-router.post('/user', (req, res) => {
-    res.send('Criação de Usuários');
-});
+router.post('/user', validateBody(createUserSchema), createUser);
 
 export const userRoutes = router;

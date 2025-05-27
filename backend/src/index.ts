@@ -1,19 +1,34 @@
 import express from 'express';
+import { prisma } from '../prisma/client';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 import { userRoutes } from './routes/userRoutes';
 
-app.use(express.json());
+async function startServer(){
+    try {
+        await prisma.$connect();
 
-app.get('/', (request, response) => {
-    response.send('API rodando com TypeScript + ESModules!');
-});
+        console.log('✅ Sucessfully sincronized!');
+        console.log('✅ Connected with database!');
+        
+        app.use(express.json());
 
-app.use(userRoutes);
+        app.use(userRoutes);
 
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-});
+        app.listen(PORT, () => {
+        console.log(`✅ Server is runnin on:  http://localhost:${PORT}`);
+        });
+
+    }catch(error){
+        console.error('❌ Failled to connect, check if the database is running!');
+        process.exit(1);
+    }
+}
+
+startServer();
+
+
+
 

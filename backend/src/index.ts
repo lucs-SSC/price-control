@@ -5,6 +5,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 import { userRoutes } from './routes/userRoutes';
+import { productRoutes } from './routes/productRoutes';
 
 async function startServer(){
     try {
@@ -16,6 +17,7 @@ async function startServer(){
         app.use(express.json());
 
         app.use(userRoutes);
+        app.use(productRoutes);
 
         app.listen(PORT, () => {
         console.log(`✅ Server is runnin on:  http://localhost:${PORT}`);

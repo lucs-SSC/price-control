@@ -20,7 +20,7 @@ async function startServer(){
         app.use(productRoutes);
 
         app.listen(PORT, () => {
-        console.log(`✅ Server is runnin on:  http://localhost:${PORT}`);
+        console.log(`✅ Server is running on:  http://localhost:${PORT}`);
         });
 
     }catch(error){

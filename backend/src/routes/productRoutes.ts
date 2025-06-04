@@ -1,8 +1,10 @@
 import express from 'express';
 
+//Validations
 import { validateBody } from '../middlewares/validateBody';
 import { validateProductSchema } from '../schemas/productSchema';
 
+//Routes
 import { createProduct } from '../controller/productController/createProduct';
 import { listProducts } from '../controller/productController/listProducts';
 import { listProductsById } from '../controller/productController/listProductById';

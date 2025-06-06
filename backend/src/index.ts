@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 3000;
 import { userRoutes } from './routes/userRoutes';
 import { productRoutes } from './routes/productRoutes';
 import { storeRoutes } from './routes/storeRoutes';
+import { productPurchaseRoute } from './routes/productPurchaseRoute';
 
 async function startServer(){
     try {
@@ -20,6 +21,7 @@ async function startServer(){
         app.use(userRoutes);
         app.use(productRoutes);
         app.use(storeRoutes);
+        app.use(productPurchaseRoute);
 
         app.listen(PORT, () => {
         console.log(`✅ Server is running on:  http://localhost:${PORT}`);

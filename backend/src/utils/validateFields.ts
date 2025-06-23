@@ -25,6 +25,7 @@ export const validateFields = async (ids: Fields) => {
         ids.storeId ? prisma.store.findUnique({ where: { id: ids.storeId } }) : Promise.resolve(null),
     ]);
 
+
     if (ids.userId && !checks[0]) notFound.push('userId');
     if (ids.productId && !checks[1]) notFound.push('productId');
     if (ids.storeId && !checks[2]) notFound.push('storeId');

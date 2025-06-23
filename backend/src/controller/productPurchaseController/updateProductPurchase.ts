@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
 import { prisma } from '../../../prisma/client';
+
 import { validateFields } from '../../utils/validateFields';
 
+export const updateProductPurchase = async (request: Request, response: Response) => {
+    const { id } = request.params;
 
-export const createProductPurchase = async(request: Request, response: Response) => {
     const { userId, productId, storeId, price } = request.body;
 
     const { invalidFormat, notFound } = await validateFields({ userId, productId, storeId });
@@ -23,20 +25,28 @@ export const createProductPurchase = async(request: Request, response: Response)
         return;
    }
 
-    try{
 
-        const createProductPurchase = await prisma.productPurchase.create({
+   try {
+        const productPurchaseExists = await prisma.productPurchase.findUnique({where: { id }});
+
+        if(!productPurchaseExists){
+            response.status(404).json('Product Purchase not found!');
+            return;
+        }
+
+        const updateProductPurchase = await prisma.productPurchase.update({
+            where: { id },
             data: {
                 price,
-                purchasedAt: new Date(),
                 userId,
                 productId,
                 storeId,
             }
         });
-        
-        response.status(200).json(createProductPurchase);
-    }catch(error){
-        response.status(500).json(`Something went wrong! ${console.log(error)}`);
-    }
+
+        response.status(200).json(updateProductPurchase);
+   }catch(error) {
+    console.log(error);
+    response.status(500).json('Something went wrong!');
+   }
 }
